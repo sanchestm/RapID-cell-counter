@@ -10,9 +10,11 @@ conda create -n celCountPaper python=3.5
 conda activate celCountPaper
 
 ### install missing packages
-conda install matplotlib shapely
+conda install matplotlib shapely pandas 
 conda install -c anaconda pyqt=4.11 scikit-image 
 
 ### run program 
-python main.py
+'folder with pictures'/python main.py
+
+
 
