@@ -18,7 +18,8 @@ conda install -c anaconda pyqt=4.11 scikit-image
 ```
 ### run program 
 ```
-'folder with pictures'/python main.py
+Dowloads/RapID-cell-counter-master/python main.py
 ```
 
+### features can be seen on video_tutorial.mov 
 
