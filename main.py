@@ -246,12 +246,12 @@ class MainWindow(QtGui.QMainWindow, form_class):
         squaresize = self.cropsize
         image_gray = self.BLUEimage
         if str(self.fMarker.currentText())  == 'RFP':
-            blobs = blob_log(self.REDimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
+            blobs = blob_log(self.REDimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = int(self.log_overlap.text()) ,threshold=int(self.thresholdSpin.text()))
         if str(self.fMarker.currentText())  == 'GFP':
-            blobs = blob_log(self.GREENimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
+            blobs = blob_log(self.GREENimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = int(self.log_overlap.text()) ,threshold=int(self.thresholdSpin.text()))
         if str(self.fMarker.currentText())  == 'GFP or RFP':
             jointImage = self.REDimage + self.GREENimage
-            blobs = blob_log(jointImage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
+            blobs = blob_log(jointImage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = int(self.log_overlap.text()) ,threshold=int(self.thresholdSpin.text()))
         #blobsDAPI = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
         self.THEblobs = blobs
         self.nMarkedCells.setText(str(len(blobs)))

@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 import matplotlib
 matplotlib.use("Qt4Agg", force = True)
 from matplotlib.pyplot import *
