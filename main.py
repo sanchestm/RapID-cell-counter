@@ -40,7 +40,6 @@ import matplotlib
 
 
 
-
 form_class = uic.loadUiType("bycells2.ui")[0]
 #form_class2 = uic.loadUiType("bycells_classwindow.ui")[0]
 
@@ -63,7 +62,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.table.setColumnCount(6)
         self.layout.addWidget(self.table, 1, 0)
         self.table.setHorizontalHeaderLabels(['Layer', 'Fluorescent cell count', 'Area', 'Density', 'Nuclei count', 'Fluorescent fraction' ])
-        for num, layer in enumerate(['VZ','IZ4','IZ3','IZ2','IZ1','CP3', 'CP2', 'CP1', 'Total selected reg', 'Total image']):
+        for num, layer in enumerate( [str(x+1) for x in range(int(self.numLayers.text()))] + ['Total selected reg', 'Total image']):
             self.table.insertRow(num)
             self.table.setItem(num , 0, QtGui.QTableWidgetItem(layer))
             self.table.setItem(num , 1, QtGui.QTableWidgetItem("0"))
@@ -74,8 +73,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
 
         self.directory = 'singleCells/'
         self.guidePoints = {'TR': 0, 'TL' : 0, 'BL' : 0, 'BR': 0}
-        self.innergridRight = [(self.guidePoints['TR']*i+ self.guidePoints['BR']*(8-i))/8 for i in range(1,9)]
-        self.innergridLeft = [(self.guidePoints['TL']*i+ self.guidePoints['BL']*(8-i))/8 for i in range(1,9)]
+        self.innergridRight = [(self.guidePoints['TR']*i+ self.guidePoints['BR']*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(1,int(self.numLayers.text()) +1)]
+        self.innergridLeft = [(self.guidePoints['TL']*i+ self.guidePoints['BL']*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(1,int(self.numLayers.text()) +1)]
         self.polygonList = []
         self.bigpoligon = 0
         self.figname = 0
@@ -103,8 +102,9 @@ class MainWindow(QtGui.QMainWindow, form_class):
             self.rmmpl()
             self.THEimage = np.array([])
             self.BLUEimage = 0
-            for num, layer in enumerate(['VZ','IZ4','IZ3','IZ2','IZ1','CP3', 'CP2', 'CP1', 'Total selected reg', 'Total image']):
-                self.table.insertRow(num)
+            while self.table.rowCount() < int(self.numLayers.text())+2: self.table.insertRow(0)
+            while self.table.rowCount() > int(self.numLayers.text())+2: self.table.removeRow(0)
+            for num, layer in enumerate([str(x+1) for x in range(int(self.numLayers.text()))] + ['Total selected reg', 'Total image']):
                 self.table.setItem(num , 0, QtGui.QTableWidgetItem(layer))
                 self.table.setItem(num , 1, QtGui.QTableWidgetItem("0"))
                 self.table.setItem(num , 2, QtGui.QTableWidgetItem("0"))
@@ -113,8 +113,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
                 self.table.setItem(num , 5, QtGui.QTableWidgetItem("0"))
             self.directory = 'singleCells/'
             self.guidePoints = {'TR': 0, 'TL' : 0, 'BL' : 0, 'BR': 0}
-            self.innergridRight = [(self.guidePoints['TR']*i+ self.guidePoints['BR']*(8-i))/8 for i in range(1,9)]
-            self.innergridLeft = [(self.guidePoints['TL']*i+ self.guidePoints['BL']*(8-i))/8 for i in range(1,9)]
+            self.innergridRight = [(self.guidePoints['TR']*i+ self.guidePoints['BR']*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(1,int(self.numLayers.text()) +1)]
+            self.innergridLeft = [(self.guidePoints['TL']*i+ self.guidePoints['BL']*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(1,int(self.numLayers.text()) +1)]
             self.polygonList = []
             self.bigpoligon = 0
             self.nMarkedCells.setText(str(0))
@@ -164,8 +164,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
-                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(8-i))/8 for i in range(0,9)]
-                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(8-i))/8 for i in range(0,9)]
+                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
+                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
                    for i in range(len(self.innergridLeft)-1):
@@ -178,8 +178,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
-                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(8-i))/8 for i in range(0,9)]
-                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(8-i))/8 for i in range(0,9)]
+                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
+                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
                    for i in range(len(self.innergridLeft)-1):
@@ -192,8 +192,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
-                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(8-i))/8 for i in range(0,9)]
-                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(8-i))/8 for i in range(0,9)]
+                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
+                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
                    for i in range(len(self.innergridLeft)-1):
@@ -204,8 +204,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
                 self.guidePoints['BR'] = [int(event.ydata),int(event.xdata)]
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
-                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(8-i))/8 for i in range(0,9)]
-                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(8-i))/8 for i in range(0,9)]
+                   self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
+                   self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
                    #print(self.bigpoligon)
@@ -252,11 +252,22 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.toolbar.close()
 
     def Id_cells(self):
+
+        while self.table.rowCount() < int(self.numLayers.text())+2: self.table.insertRow(0)
+        while self.table.rowCount() > int(self.numLayers.text())+2: self.table.removeRow(0)
+        for num, layer in enumerate( [str(x+1) for x in range(int(self.numLayers.text()))] + ['Total selected reg', 'Total image']):
+            self.table.setItem(num , 0, QtGui.QTableWidgetItem(layer))
+            self.table.setItem(num , 1, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 2, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 3, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 4, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 5, QtGui.QTableWidgetItem("0"))
+
         squaresize = self.cropsize
         image_gray = self.BLUEimage
 
         self.BLUEblobs = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
-        self.table.setItem(9 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
+        self.table.setItem(int(self.numLayers.text()) +1 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'RFP':
             blobs = blob_log(self.REDimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
         if str(self.fMarker.currentText())  == 'GFP':
@@ -267,14 +278,10 @@ class MainWindow(QtGui.QMainWindow, form_class):
         #blobsDAPI = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
         self.THEblobs = blobs
         self.nMarkedCells.setText(str(len(blobs)))
-        self.table.setItem(9 , 1, QtGui.QTableWidgetItem(str(len(blobs))))
+        self.table.setItem(int(self.numLayers.text()) +1 , 1, QtGui.QTableWidgetItem(str(len(blobs))))
         #self.table.setItem(9 , 2, QtGui.QTableWidgetItem(str(len(blobsDAPI))))
-        if float(self.table.item(9,2).text()) != 0:
-            self.table.setItem(9 , 3, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,2).text()))))
-        #self.table.setRowCount(len(blobs))
-        #self.table.setColumnCount(3)
-        #self.layout.addWidget(self.table, 1, 0)
-        #self.table.setHorizontalHeaderLabels(['index', 'auto class', 'manual class'])
+        if float(self.table.item(int(self.numLayers.text()) +1,2).text()) != 0:
+            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtGui.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,2).text()))))
         self.ImgAddPatches()
 
     def ImgAddPatches(self):
@@ -285,8 +292,20 @@ class MainWindow(QtGui.QMainWindow, form_class):
         ax.axis('off')
         subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
 
-        self.table.setItem(9 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
-        self.table.setItem(9 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,4).text()))[:10]))
+        while self.table.rowCount() < int(self.numLayers.text())+2: self.table.insertRow(0)
+        while self.table.rowCount() > int(self.numLayers.text())+2: self.table.removeRow(0)
+        for num, layer in enumerate( [str(x+1) for x in range(int(self.numLayers.text()))] + ['Total selected reg', 'Total image']):
+            self.table.setItem(num , 0, QtGui.QTableWidgetItem(layer))
+            self.table.setItem(num , 1, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 2, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 3, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 4, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 5, QtGui.QTableWidgetItem("0"))
+
+        self.table.setItem(int(self.numLayers.text())+1 , 1, QtGui.QTableWidgetItem(str(len(self.THEblobs))))
+        self.table.setItem(int(self.numLayers.text()) +1 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
+        if float(self.table.item(int(self.numLayers.text()) +1,4).text()) > 0:
+            self.table.setItem(int(self.numLayers.text()) +1 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,4).text()))[:10]))
 
         if 0 not in self.guidePoints.values():
             ctr = 0
@@ -302,13 +321,14 @@ class MainWindow(QtGui.QMainWindow, form_class):
                     #print('pollistcount:'+str(polygonListCount))
                     c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                     ax.add_patch(c)
-                    ax.text(x+squaresize-self.cropsize/2,y+ squaresize+self.cropsize/2, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 6)
+                    ax.text(x+squaresize-self.cropsize/2,y+ squaresize+self.cropsize/2, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
             self.nMarkedCells.setText(str(ctr) )
-            self.table.setItem(9 , 2, QtGui.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
-            self.table.setItem( 8, 2, QtGui.QTableWidgetItem(str(int(self.bigpoligon.area/self.bigpoligon.area))))
-            self.table.setItem(8 , 1, QtGui.QTableWidgetItem(str(ctr)))
-            self.table.setItem(8 , 3, QtGui.QTableWidgetItem(str(ctr)))
-            self.table.setItem(9 , 3, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,2).text()))[:6]))
+            self.table.setItem(int(self.numLayers.text()) +1 , 2, QtGui.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
+            self.table.setItem( int(self.numLayers.text()), 2, QtGui.QTableWidgetItem(str(int(self.bigpoligon.area/self.bigpoligon.area))))
+            self.table.setItem(int(self.numLayers.text()) , 1, QtGui.QTableWidgetItem(str(ctr)))
+
+            self.table.setItem(int(self.numLayers.text()) , 3, QtGui.QTableWidgetItem(str(ctr)))
+            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtGui.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,2).text()))[:6]))
 
             for n, pol in enumerate(self.polygonList):
                 self.table.setItem(n, 2, QtGui.QTableWidgetItem(str(pol.area/self.bigpoligon.area)[:4]))
@@ -326,8 +346,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
                     whichpolygonDAPI = [1  if x.contains(blobPoint) else 0  for x in self.polygonList]
                     polygonListCountDAPI += array(whichpolygonDAPI)
 
-            self.table.setItem(8 , 4, QtGui.QTableWidgetItem(str(ctrDAPI)))
-            if float(self.table.item(8,4).text())>0: self.table.setItem(8 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(8,1).text())/ctrDAPI)))
+            self.table.setItem(int(self.numLayers.text()) , 4, QtGui.QTableWidgetItem(str(ctrDAPI)))
+            if float(self.table.item(int(self.numLayers.text()),4).text())>0: self.table.setItem(int(self.numLayers.text()) , 5, QtGui.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()),1).text())/ctrDAPI)))
 
             for n, pol in enumerate(self.polygonList):
                 self.table.setItem(n, 5, QtGui.QTableWidgetItem(str(polygonListCount[n]/polygonListCountDAPI[n])[:6]))
@@ -343,7 +363,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
                 ax.text(x+squaresize-self.cropsize/2,y+ squaresize+self.cropsize/2, str(number), color = 'white', fontsize = 4)
         for number, key in enumerate(self.guidePoints):
             if self.guidePoints[key] != 0:
-                ax.add_patch(Circle(self.guidePoints[key][::-1], 8, color='w', linewidth=2, fill=True))
+                ax.add_patch(Circle(self.guidePoints[key][::-1], int(self.numLayers.text()), color='w', linewidth=2, fill=True))
 
         if self.guidePoints['TR'] != 0 and self.guidePoints['TL'] != 0: ax.plot([self.guidePoints['TR'][1],self.guidePoints['TL'][1]]
                                                                                 , [self.guidePoints['TR'][0],self.guidePoints['TL'][0]], '-', color='w', linewidth=2)
@@ -370,9 +390,12 @@ class MainWindow(QtGui.QMainWindow, form_class):
         fcells  = np.array([str(self.table.item(i,1).text())  for i in range(self.table.rowCount() ) ])
         area  = np.array([str(self.table.item(i,2).text())  for i in range(self.table.rowCount() ) ])
         density  = np.array([str(self.table.item(i,3).text())  for i in range(self.table.rowCount() ) ])
-        classtable = DataFrame( np.transpose(np.vstack((layer, fcells,area, density))))#, index=dates, columns=[nome , classe])
+        nucleiCount = np.array([str(self.table.item(i,4).text())  for i in range(self.table.rowCount() ) ])
+        transfectedRatio = np.array([str(self.table.item(i,5).text())  for i in range(self.table.rowCount() ) ])
+        classtable = DataFrame( np.transpose(np.vstack((layer, fcells,area, density, nucleiCount, transfectedRatio))))#, index=dates, columns=[nome , classe])
         print(classtable)
-        saveclassification = classtable.to_csv(self.figname +'_count.csv',index=False,header=['layers','Fluorescent cells', 'Area', 'Density'])
+        saveclassification = classtable.to_csv(self.figname +'_count.csv',index=False,header=['layers','Fluorescent cells'
+        , 'Area', 'Density', 'DAPI cell count', 'Transfection efficiency' ])
 
 
 
