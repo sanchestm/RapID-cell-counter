@@ -51,6 +51,11 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.FindCells.clicked.connect(self.Id_cells)
         self.AddClassified.clicked.connect(self.create_csv)
         self.imageviewbutton.clicked.connect(self.openMainFig)
+        self.numLayers.valueChanged.connect(self.redrawLayers)
+        self.maxSigSpin.valueChanged.connect(self.Id_cells)
+        self.minSigSpin.valueChanged.connect(self.Id_cells)
+        self.log_overlap.valueChanged.connect(self.Id_cells)
+        self.thresholdSpin.valueChanged.connect(self.Id_cells)
         self.cropsize = 25
         self.fig = Figure()
         self.THEimage = np.array([])
@@ -233,6 +238,17 @@ class MainWindow(QtGui.QMainWindow, form_class):
             #self.ImgAddPatches()
 
 
+    def redrawLayers(self):
+        if 0 not in self.guidePoints.values():
+           self.polygonList = []
+           self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
+           self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
+           #print(self.innergridLeft, self.innergridRight)
+           self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
+           #print(self.bigpoligon)
+           for i in range(len(self.innergridLeft)-1):
+               self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
+        self.ImgAddPatches()
 
 
     def changeFIGURE(self, newFIG):
@@ -252,7 +268,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.toolbar.close()
 
     def Id_cells(self):
-
+        if type(self.BLUEimage) == type(0): return
         while self.table.rowCount() < int(self.numLayers.text())+2: self.table.insertRow(0)
         while self.table.rowCount() > int(self.numLayers.text())+2: self.table.removeRow(0)
         for num, layer in enumerate( [str(x+1) for x in range(int(self.numLayers.text()))] + ['Total selected reg', 'Total image']):
