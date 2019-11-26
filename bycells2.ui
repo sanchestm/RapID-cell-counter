@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>575</width>
+    <height>533</height>
+   </rect>
+  </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
@@ -56,14 +64,20 @@
       <item>
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Num sigma</string>
+         <string>Overlap</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="numSigSpin">
+       <widget class="QDoubleSpinBox" name="log_overlap">
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.050000000000000</double>
+        </property>
         <property name="value">
-         <number>10</number>
+         <double>0.500000000000000</double>
         </property>
        </widget>
       </item>
@@ -80,7 +94,7 @@
          <double>0.100000000000000</double>
         </property>
         <property name="value">
-         <double>0.100000000000000</double>
+         <double>0.200000000000000</double>
         </property>
        </widget>
       </item>
@@ -291,8 +305,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>953</width>
-     <height>22</height>
+     <width>575</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
