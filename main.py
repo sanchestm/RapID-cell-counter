@@ -56,18 +56,21 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.fig = Figure()
         self.THEimage = np.array([])
         self.BLUEimage = 0
+        self.BLUEblobs = np.array([])
         self.REDimage = 0
         self.GREENimage = 0
         self.THEblobs = np.array([])
-        self.table.setColumnCount(4)
+        self.table.setColumnCount(6)
         self.layout.addWidget(self.table, 1, 0)
-        self.table.setHorizontalHeaderLabels(['Layer', 'fluorescent cells', 'Area', 'density' ])
+        self.table.setHorizontalHeaderLabels(['Layer', 'Fluorescent cell count', 'Area', 'Density', 'Nuclei count', 'Fluorescent fraction' ])
         for num, layer in enumerate(['VZ','IZ4','IZ3','IZ2','IZ1','CP3', 'CP2', 'CP1', 'Total selected reg', 'Total image']):
             self.table.insertRow(num)
             self.table.setItem(num , 0, QtGui.QTableWidgetItem(layer))
             self.table.setItem(num , 1, QtGui.QTableWidgetItem("0"))
             self.table.setItem(num , 2, QtGui.QTableWidgetItem("0"))
             self.table.setItem(num , 3, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 4, QtGui.QTableWidgetItem("0"))
+            self.table.setItem(num , 5, QtGui.QTableWidgetItem("0"))
 
         self.directory = 'singleCells/'
         self.guidePoints = {'TR': 0, 'TL' : 0, 'BL' : 0, 'BR': 0}
@@ -106,6 +109,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
                 self.table.setItem(num , 1, QtGui.QTableWidgetItem("0"))
                 self.table.setItem(num , 2, QtGui.QTableWidgetItem("0"))
                 self.table.setItem(num , 3, QtGui.QTableWidgetItem("0"))
+                self.table.setItem(num , 4, QtGui.QTableWidgetItem("0"))
+                self.table.setItem(num , 5, QtGui.QTableWidgetItem("0"))
             self.directory = 'singleCells/'
             self.guidePoints = {'TR': 0, 'TL' : 0, 'BL' : 0, 'BR': 0}
             self.innergridRight = [(self.guidePoints['TR']*i+ self.guidePoints['BR']*(8-i))/8 for i in range(1,9)]
@@ -122,6 +127,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.THEimage = image
         self.imgPolygon = Polygon([[0,0],[0,image.shape[1]],[image.shape[0],image.shape[1]],[image.shape[0],0]]  )
         self.BLUEimage = image[:,:,2]
+        self.BLUEblobs = blob_log(self.BLUEimage[self.cropsize:-self.cropsize,self.cropsize:-self.cropsize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
         self.REDimage = image[:,:,0]
         self.GREENimage = image[:,:,1]
         baseimage = self.fig.add_subplot(111)
@@ -248,6 +254,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
     def Id_cells(self):
         squaresize = self.cropsize
         image_gray = self.BLUEimage
+
+        self.BLUEblobs = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
         if str(self.fMarker.currentText())  == 'RFP':
             blobs = blob_log(self.REDimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
         if str(self.fMarker.currentText())  == 'GFP':
@@ -297,6 +305,8 @@ class MainWindow(QtGui.QMainWindow, form_class):
             self.table.setItem(8 , 1, QtGui.QTableWidgetItem(str(ctr)))
             self.table.setItem(8 , 3, QtGui.QTableWidgetItem(str(ctr)))
             self.table.setItem(9 , 3, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,2).text()))[:6]))
+            self.table.setItem(9 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
+            self.table.setItem(9 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,4).text()))[:10]))
             for n, pol in enumerate(self.polygonList):
                 self.table.setItem(n, 2, QtGui.QTableWidgetItem(str(pol.area/self.bigpoligon.area)[:4]))
                 self.table.setItem(n, 3, QtGui.QTableWidgetItem(str(polygonListCount[n]/(pol.area/self.bigpoligon.area))[:6]))

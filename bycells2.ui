@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Cell counter</string>
+   <string>RapID cell counter</string>
   </property>
   <property name="windowIcon">
    <iconset>
