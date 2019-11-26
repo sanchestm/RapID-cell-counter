@@ -35,8 +35,8 @@ from skimage.feature import corner_harris, corner_subpix, corner_peaks
 from skimage.transform import warp, AffineTransform
 from matplotlib.lines import Line2D
 import matplotlib
-matplotlib.style.use('ggplot')
-
+#matplotlib.style.use('ggplot')
+#mpl.rcParams[''] = 2
 
 
 
@@ -125,9 +125,12 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.REDimage = image[:,:,0]
         self.GREENimage = image[:,:,1]
         baseimage = self.fig.add_subplot(111)
-        baseimage.axis('off')
+        baseimage.axis('off', frameon=False)
         baseimage.grid(False)
         baseimage.imshow(image)
+        axis('off')
+        subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
+
         self.canvas = FigureCanvas(self.fig)
         self.mplvl.addWidget(self.canvas)
         self.canvas.draw()
@@ -266,12 +269,12 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.ImgAddPatches()
 
     def ImgAddPatches(self):
-        colors = ['w', 'r', 'g', 'y', 'w', 'r', 'g', 'y', 'orange', 'w', 'r'] 
+        colors = ['w', 'r', 'g', 'y', 'w', 'r', 'g', 'y', 'orange', 'w', 'r'] *100
         squaresize = self.cropsize
         self.fig, ax = subplots(1, 1)
         ax.imshow(self.THEimage)
-        #ax.grid(False)
         ax.axis('off')
+        subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
 
         if 0 not in self.guidePoints.values():
             ctr = 0
@@ -282,7 +285,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
                 blobPoint = Point(y+ int(squaresize),x+int(squaresize))
                 if self.bigpoligon.contains(blobPoint):
                     ctr+= 1
-                    whichpolygon = [1  if x.contains(blobPoint) else 0  for x in self.polygonList ]
+                    whichpolygon = [1  if x.contains(blobPoint) else 0  for x in self.polygonList]
                     polygonListCount += array(whichpolygon)
                     #print('pollistcount:'+str(polygonListCount))
                     c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
@@ -321,6 +324,10 @@ class MainWindow(QtGui.QMainWindow, form_class):
         if 0 not in self.guidePoints.values():
             for i in range(len(self.innergridLeft)):
                 ax.plot([self.innergridRight[i][1], self.innergridLeft[i][1]], [self.innergridRight[i][0], self.innergridLeft[i][0]], '-', color = 'w', linewidth = 1)
+        ax.axis('off')
+        subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
+        for item in [self.fig, ax]:
+            item.patch.set_visible(False)
         self.changeFIGURE(self.fig)
 
 
