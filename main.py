@@ -127,7 +127,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.THEimage = image
         self.imgPolygon = Polygon([[0,0],[0,image.shape[1]],[image.shape[0],image.shape[1]],[image.shape[0],0]]  )
         self.BLUEimage = image[:,:,2]
-        self.BLUEblobs = blob_log(self.BLUEimage[self.cropsize:-self.cropsize,self.cropsize:-self.cropsize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
+        #self.BLUEblobs = blob_log(self.BLUEimage[self.cropsize:-self.cropsize,self.cropsize:-self.cropsize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
         self.REDimage = image[:,:,0]
         self.GREENimage = image[:,:,1]
         baseimage = self.fig.add_subplot(111)
@@ -256,6 +256,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
         image_gray = self.BLUEimage
 
         self.BLUEblobs = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
+        self.table.setItem(9 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'RFP':
             blobs = blob_log(self.REDimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
         if str(self.fMarker.currentText())  == 'GFP':
@@ -284,6 +285,9 @@ class MainWindow(QtGui.QMainWindow, form_class):
         ax.axis('off')
         subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
 
+        self.table.setItem(9 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
+        self.table.setItem(9 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,4).text()))[:10]))
+
         if 0 not in self.guidePoints.values():
             ctr = 0
             polygonListCount = array([0 for i in self.polygonList])
@@ -305,12 +309,31 @@ class MainWindow(QtGui.QMainWindow, form_class):
             self.table.setItem(8 , 1, QtGui.QTableWidgetItem(str(ctr)))
             self.table.setItem(8 , 3, QtGui.QTableWidgetItem(str(ctr)))
             self.table.setItem(9 , 3, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,2).text()))[:6]))
-            self.table.setItem(9 , 4, QtGui.QTableWidgetItem(str(len(self.BLUEblobs))))
-            self.table.setItem(9 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(9,1).text())/float(self.table.item(9,4).text()))[:10]))
+
             for n, pol in enumerate(self.polygonList):
                 self.table.setItem(n, 2, QtGui.QTableWidgetItem(str(pol.area/self.bigpoligon.area)[:4]))
                 self.table.setItem(n, 3, QtGui.QTableWidgetItem(str(polygonListCount[n]/(pol.area/self.bigpoligon.area))[:6]))
                 self.table.setItem(n, 1, QtGui.QTableWidgetItem(str(polygonListCount[n])))
+
+            #### add blue cells to dapi count
+            ctrDAPI = 0
+            polygonListCountDAPI = array([0 for i in self.polygonList])
+            for number, blob in enumerate(self.BLUEblobs):
+                y, x, r = blob
+                blobPoint = Point(y+ int(squaresize),x+int(squaresize))
+                if self.bigpoligon.contains(blobPoint):
+                    ctrDAPI+= 1
+                    whichpolygonDAPI = [1  if x.contains(blobPoint) else 0  for x in self.polygonList]
+                    polygonListCountDAPI += array(whichpolygonDAPI)
+
+            self.table.setItem(8 , 4, QtGui.QTableWidgetItem(str(ctrDAPI)))
+            if float(self.table.item(8,4).text())>0: self.table.setItem(8 , 5, QtGui.QTableWidgetItem(str(float(self.table.item(8,1).text())/ctrDAPI)))
+
+            for n, pol in enumerate(self.polygonList):
+                self.table.setItem(n, 5, QtGui.QTableWidgetItem(str(polygonListCount[n]/polygonListCountDAPI[n])[:6]))
+                self.table.setItem(n, 4, QtGui.QTableWidgetItem(str(polygonListCountDAPI[n])))
+
+
 
         if 0 in self.guidePoints.values():
             for number, blob in enumerate(self.THEblobs):
