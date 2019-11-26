@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
-    <height>533</height>
+    <width>582</width>
+    <height>657</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -31,6 +31,163 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="10" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>What the right click does:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="rClicktype">
+        <item>
+         <property name="text">
+          <string>Add cell</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Remove cell</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Add 1st box corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Add 2nd box corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Add 3rd box corner</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Add 4th box corner</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="14" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Number of layers:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="numLayers">
+        <property name="value">
+         <number>8</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Fluorescent marker: </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="fMarker">
+        <item>
+         <property name="text">
+          <string>RFP</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>GFP</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>GFP or RFP</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Open image</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="imageviewbutton">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="1" colspan="2">
+     <widget class="QPushButton" name="FindCells">
+      <property name="text">
+       <string>Auto find cells</string>
+      </property>
+     </widget>
+    </item>
+    <item row="17" column="1" colspan="2">
+     <widget class="QPushButton" name="AddClassified">
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+        <weight>75</weight>
+        <italic>true</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Save table</string>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="1" colspan="2">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Number of cells per layer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="18">
+     <layout class="QVBoxLayout" name="mplvl">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item row="2" column="1" colspan="2">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
@@ -100,77 +257,7 @@
       </item>
      </layout>
     </item>
-    <item row="10" column="1" colspan="2">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>What the right click does:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="rClicktype">
-        <item>
-         <property name="text">
-          <string>Add cell</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Remove cell</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Add 1st box corner</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Add 2nd box corner</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Add 3rd box corner</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Add 4th box corner</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="1" colspan="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
-      <item>
-       <widget class="QLabel" name="label_11">
-        <property name="text">
-         <string>Open image</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="imageviewbutton">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="13" column="1" colspan="2">
-     <widget class="QLabel" name="label_8">
-      <property name="text">
-       <string>Number of cells per layer</string>
-      </property>
-     </widget>
-    </item>
-    <item row="14" column="1" colspan="2">
+    <item row="16" column="1" colspan="2">
      <layout class="QGridLayout" name="layout">
       <item row="0" column="0">
        <widget class="QTableWidget" name="table">
@@ -229,75 +316,6 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="0" rowspan="16">
-     <layout class="QVBoxLayout" name="mplvl">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMinimumSize</enum>
-      </property>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
-        <property name="mouseTracking">
-         <bool>true</bool>
-        </property>
-        <property name="autoFillBackground">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="1" colspan="2">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Fluorescent marker: </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="fMarker">
-        <item>
-         <property name="text">
-          <string>RFP</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>GFP</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>GFP or RFP</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="1" colspan="2">
-     <widget class="QPushButton" name="FindCells">
-      <property name="text">
-       <string>Auto find cells</string>
-      </property>
-     </widget>
-    </item>
-    <item row="15" column="1" colspan="2">
-     <widget class="QPushButton" name="AddClassified">
-      <property name="font">
-       <font>
-        <pointsize>9</pointsize>
-        <weight>75</weight>
-        <italic>true</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Save table</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -305,7 +323,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>575</width>
+     <width>582</width>
      <height>24</height>
     </rect>
    </property>
@@ -315,7 +333,13 @@
     </property>
     <addaction name="actionHow_to_run"/>
    </widget>
+   <widget class="QMenu" name="menuhttps_github_com_sanchestm_RapID_cell_counter">
+    <property name="title">
+     <string>github.com/sanchestm/RapID-cell-counter</string>
+    </property>
+   </widget>
    <addaction name="menuHelp"/>
+   <addaction name="menuhttps_github_com_sanchestm_RapID_cell_counter"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionHow_to_run">
