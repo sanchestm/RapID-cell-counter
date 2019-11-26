@@ -266,7 +266,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
         self.ImgAddPatches()
 
     def ImgAddPatches(self):
-        colors = ['w', 'r', 'g', 'y', 'w', 'r', 'g', 'y', 'orange', 'w', 'r']
+        colors = ['w', 'r', 'g', 'y', 'w', 'r', 'g', 'y', 'orange', 'w', 'r'] 
         squaresize = self.cropsize
         self.fig, ax = subplots(1, 1)
         ax.imshow(self.THEimage)
