@@ -39,7 +39,6 @@ import matplotlib
 #mpl.rcParams[''] = 2
 
 
-
 form_class = uic.loadUiType("bycells2.ui")[0]
 #form_class2 = uic.loadUiType("bycells_classwindow.ui")[0]
 
@@ -303,6 +302,7 @@ class MainWindow(QtGui.QMainWindow, form_class):
     def ImgAddPatches(self):
         colors = ['w', 'r', 'g', 'y', 'w', 'r', 'g', 'y', 'orange', 'w', 'r'] *100
         squaresize = self.cropsize
+        close(self.fig)
         self.fig, ax = subplots(1, 1)
         ax.imshow(self.THEimage)
         ax.axis('off')
