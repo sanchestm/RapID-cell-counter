@@ -221,7 +221,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
             if str(self.rClicktype.currentText()) == 'Remove cell':
-                dist = np.sum((self.THEblobs[:,0:2]+self.cropsize+1-[event.ydata,event.xdata])**2,1)
+                dist = np.sum((self.THEblobs[:,0:2]-[event.ydata,event.xdata])**2,1)
                 if min(dist) < 800:
                     line = dist.tolist().index(min(dist))
                     #print(line)
@@ -232,7 +232,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
 
         elif event.button == 2:
             #print(self.THEblobs[:,0:2])
-            dist = np.sum((self.THEblobs[:,0:2]+self.cropsize+1-[event.ydata,event.xdata])**2,1)
+            dist = np.sum((self.THEblobs[:,0:2]-[event.ydata,event.xdata])**2,1)
             if min(dist) < 800:
                 line = dist.tolist().index(min(dist))
                 #print(line)
@@ -344,7 +344,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                     #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                     c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                     ax.add_patch(c)
-                    ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
+                    ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 6)
             self.nMarkedCells.setText(str(ctr) )
             self.table.setItem(int(self.numLayers.text()) +1 , 2, QtWidgets.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
             self.table.setItem( int(self.numLayers.text()), 2, QtWidgets.QTableWidgetItem(str(int(self.bigpoligon.area/self.bigpoligon.area))))
@@ -382,9 +382,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             for number, blob in enumerate(self.THEblobs):
                 y, x, r = blob
                 #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
-                c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
+                c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color='gray', linewidth=.5, alpha = 0.3)
                 ax.add_patch(c)
-                ax.text(x,y, str(number), color = 'white', fontsize = 4)
+                ax.text(x,y, str(number), color = 'white', fontsize = 10)
         for number, key in enumerate(self.guidePoints):
             if self.guidePoints[key] != 0:
                 ax.add_patch(Circle(self.guidePoints[key][::-1], int(self.numLayers.text()), color='w', linewidth=2, fill=True))
