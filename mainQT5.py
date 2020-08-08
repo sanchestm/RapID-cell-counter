@@ -158,7 +158,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             if str(self.rClicktype.currentText()) == 'Add cell':
                 squaresize = self.cropsize
                 #print(len(self.THEblobs))
-                self.THEblobs =np.array(self.THEblobs.tolist() + [[int(event.ydata - squaresize), int(event.xdata - squaresize), self.cropsize]])
+                self.THEblobs =np.array(self.THEblobs.tolist() + [[int(event.ydata), int(event.xdata), self.cropsize]])
                 #print(len(self.THEblobs))
                 #self.table.setHorizontalHeaderLabels(['index', 'auto class', 'manual class'])
                 #rowPosition = self.table.rowCount()
@@ -285,15 +285,17 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
         squaresize = self.cropsize
         image_gray = self.BLUEimage
 
-        self.BLUEblobs = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
+        self.BLUEblobs = blob_log(self.BLUEimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
         self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'RFP':
-            blobs = blob_log(self.REDimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
+            blobs = blob_log(self.REDimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP':
-            blobs = blob_log(self.GREENimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
+            blobs = blob_log(self.GREENimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP or RFP':
-            jointImage = self.REDimage + self.GREENimage
-            blobs = blob_log(jointImage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()))
+            blobs = blob_log(self.REDimage + self.GREENimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         #blobsDAPI = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
         self.THEblobs = blobs
         self.nMarkedCells.setText(str(len(blobs)))
@@ -333,15 +335,16 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             #print('pollistcount before:'+str(polygonListCount))
             for number, blob in enumerate(self.THEblobs):
                 y, x, r = blob
-                blobPoint = Point(y+ int(squaresize),x+int(squaresize))
+                blobPoint = Point(y,x)
                 if self.bigpoligon.contains(blobPoint):
                     ctr+= 1
                     whichpolygon = [1  if x.contains(blobPoint) else 0  for x in self.polygonList]
                     polygonListCount += array(whichpolygon)
                     #print('pollistcount:'+str(polygonListCount))
-                    c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
+                    #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
+                    c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                     ax.add_patch(c)
-                    ax.text(x+squaresize-self.cropsize/2,y+ squaresize+self.cropsize/2, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
+                    ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
             self.nMarkedCells.setText(str(ctr) )
             self.table.setItem(int(self.numLayers.text()) +1 , 2, QtWidgets.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
             self.table.setItem( int(self.numLayers.text()), 2, QtWidgets.QTableWidgetItem(str(int(self.bigpoligon.area/self.bigpoligon.area))))
@@ -360,7 +363,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             polygonListCountDAPI = array([0 for i in self.polygonList])
             for number, blob in enumerate(self.BLUEblobs):
                 y, x, r = blob
-                blobPoint = Point(y+ int(squaresize),x+int(squaresize))
+                blobPoint = Point(y,x)
                 if self.bigpoligon.contains(blobPoint):
                     ctrDAPI+= 1
                     whichpolygonDAPI = [1  if x.contains(blobPoint) else 0  for x in self.polygonList]
@@ -378,9 +381,10 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
         if 0 in self.guidePoints.values():
             for number, blob in enumerate(self.THEblobs):
                 y, x, r = blob
-                c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
+                #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
+                c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                 ax.add_patch(c)
-                ax.text(x+squaresize-self.cropsize/2,y+ squaresize+self.cropsize/2, str(number), color = 'white', fontsize = 4)
+                ax.text(x,y, str(number), color = 'white', fontsize = 4)
         for number, key in enumerate(self.guidePoints):
             if self.guidePoints[key] != 0:
                 ax.add_patch(Circle(self.guidePoints[key][::-1], int(self.numLayers.text()), color='w', linewidth=2, fill=True))
