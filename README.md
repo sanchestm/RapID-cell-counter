@@ -10,7 +10,6 @@ Open Conda terminal and type
 ```
 conda create --name RapID shapely pandas pyqt scikit-image
 conda activate RapID
-
 ```
 ### run program 
 ```
