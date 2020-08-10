@@ -11,7 +11,7 @@ Open Conda terminal and type
 conda create --name RapID shapely pandas pyqt scikit-image
 conda activate RapID
 ```
-### run program 
+### Run program 
 ```
 Dowloads/RapID-cell-counter-master/python mainQT5.py
 ```
