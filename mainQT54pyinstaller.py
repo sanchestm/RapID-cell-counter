@@ -38,9 +38,7 @@ import imageio
 #mpl.rcParams[''] = 2
 
 
-#form_class = uic.loadUiType("C:\Users\thiag\Documents\GitHub\RapID-cell-counter\bycells2.ui")[0]
-form_class = uic.loadUiType("bycells2.ui")[0]
-#form_class2 = uic.loadUiType("bycells_classwindow.ui")[0]
+form_class = uic.loadUiType(r"C:\Users\thiag\Documents\GitHub\RapID-cell-counter\bycells2.ui")[0]
 
 class MainWindow(QtWidgets.QMainWindow, form_class):
     def __init__(self, parent=None):
