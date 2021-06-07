@@ -8,9 +8,8 @@ PyQT graphical interface for high-throughput cell counting for research
 #### Dowload Ananconda if not done before
 #### Dowload and unzip the RapID-cell-counter manually or use git clone
 
-Open Conda terminal (via Anaconda Navigator -> CMD.exe Prompt or via Command Prompt or via Ctrl+alt+t (linux))
+Open Conda terminal (via Anaconda Navigator -> CMD.exe Prompt or via Command Prompt)
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env.png)
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/navigator.png)
 
 ```
@@ -18,11 +17,12 @@ conda create --name RapID shapely pandas pyqt scikit-image
 conda activate RapID
 ```
 
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env.png)
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/activating_conda_environment.png)
 
 Once we activated the conda environment (which contains all the necessary packages to run the code) we can locate the file (the directory where we downloaded and unzipped the package) and enter the directory to be able to run the program.
 
-As an example if we unzipped our file in the Dowloads directory we can open this directory using the `cd` Command.
+As an example if we unzipped our file in the Downloads directory we can open this directory using the `cd` Command.
 
 ```
 cd Downloads\RapID-cell-counter-master
