@@ -14,7 +14,7 @@ conda create --name RapID shapely pandas pyqt scikit-image
 conda activate RapID
 ```
 
-![screenshot](https://github.com/sanchestm/mitotic-index-calc/blob/master/images/activating_conda_environment.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/activating_conda_environment.png)
 
 Once we activated the conda environment (which contains all the necessary packages to run the code) we can locate the file (the directory where we downloaded and unzipped the package) and enter the directory to be able to run the program.
 
@@ -26,7 +26,7 @@ cd Downloads\RapID-cell-counter-master
 
 In Linux and Mac, the dashes are `/` while in windows we use `\`
 
-![screenshot](https://github.com/sanchestm/mitotic-index-calc/blob/master/images/opening_folder.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/opening_folder.png)
 
 ### Run program
 #### Fist check if the right conda environment is open, in parenthesis in the terminal and that you're in the right directory (check it in your file system)
@@ -35,7 +35,7 @@ In Linux and Mac, the dashes are `/` while in windows we use `\`
 python mainQT5.py
 ```
 
-![screenshot](https://github.com/sanchestm/mitotic-index-calc/blob/master/images/running_program.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/running_program.png)
 
 ### Rerunning the program
 
