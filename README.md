@@ -17,7 +17,7 @@ conda create --name RapID shapely pandas pyqt scikit-image
 conda activate RapID
 ```
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env2.png)
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/activating_conda_environment.png)
 
 Once we activated the conda environment (which contains all the necessary packages to run the code) we can locate the file (the directory where we downloaded and unzipped the package) and enter the directory to be able to run the program.
