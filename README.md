@@ -10,6 +10,7 @@ PyQT graphical interface for high-throughput cell counting for research
 
 Open Conda terminal (via Anaconda Navigator -> CMD.exe Prompt or via Command Prompt or via Ctrl+alt+t (linux))
 
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env.png)
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/navigator.png)
 
 ```
