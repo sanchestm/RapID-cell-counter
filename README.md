@@ -14,7 +14,7 @@ conda create --name RapID shapely pandas pyqt scikit-image
 conda activate RapID
 ```
 
-![Screenshot](creating conda environment.png)
+![alt text](../master/creating conda environment.png)
 
 Once we activated the conda environment (which contains all the necessary packages to run the code) we can locate the file (the directory where we downloaded and unzipped the package) and enter the directory to be able to run the program.
 
@@ -26,7 +26,7 @@ cd Downloads\RapID-cell-counter-master
 
 In Linux and Mac, the dashes are `/` while in windows we use `\`
 
-![Screenshot](activating conda environment.png)
+![alt text](../master/activating conda environment.png)
 
 ### Run program
 #### Fist check if the right conda environment is open, in parenthesis in the terminal and that you're in the right directory (check it in your file system)
@@ -35,7 +35,7 @@ In Linux and Mac, the dashes are `/` while in windows we use `\`
 python mainQT5.py
 ```
 
-![Screenshot](running program.png)
+![alt text](../master/running program.png)
 
 ### Rerunning the program
 
