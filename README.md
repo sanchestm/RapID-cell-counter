@@ -5,12 +5,17 @@ PyQT graphical interface for high-throughput cell counting for research
 
 ### Installing instruction
 
-#### Dowload Ananconda if not done before
-#### Dowload and unzip the RapID-cell-counter manually or use git clone
+#### [Dowload Ananconda](https://www.anaconda.com/products/individual) if not done before
+#### Dowload and unzip the RapID-cell-counter manually: click the green button writen `code` and then click `download zip` in the dropdown options (or use git clone if experienced)
 
-Open Conda terminal (via Anaconda Navigator -> CMD.exe Prompt or via Command Prompt)
+#### Open terminal (via Anaconda Navigator -> CMD.exe Prompt or via Command Prompt)
+##### In Windows press the windows key and type Ananconda Navigator to and click on the Anaconda Navigator desktop app
+##### In Linux the terminal can be open directly via CRTL+ALT+T
+##### In Mac to open the terminal directly click the Launchpad icon in the Dock, type Terminal in the search field, then click Terminal. Otherwise, click the Launchpad icon in the Dock, type Anaconda Navigator in the search field, then click then click Anaconda Navigator to open the desktop app if prefered.
 
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/navigator.png)
+
+#### In the terminal copy-paste and press enter for the following code (one line at a time)
 
 ```
 conda create --name RapID shapely pandas pyqt scikit-image
@@ -51,22 +56,3 @@ To rerun the program once we closed it, we only have to reopen the Conda termina
 ### Installing instructions
 For this program, first you'll need to have Conda installed in your computer.
 this program runs on python 3.5 so we'll create an environment and then install the necessary packages. This will take around 15 min.
-
-
-#### creating a new Python 3.5  environment and activating it
-```
-conda create -n celCountPaper python=3.5
-conda activate celCountPaper
-```
-
-#### install missing packages
-```
-conda install matplotlib shapely pandas
-conda install -c anaconda pyqt=4.11 scikit-image
-```
-### run program
-```
-Dowloads/RapID-cell-counter-master/python main.py
-```
-
-### features can be seen on video_tutorial.mov
