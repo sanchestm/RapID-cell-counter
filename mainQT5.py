@@ -185,9 +185,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
 
                 self.nMarkedCells.setText(str(int(self.nMarkedCells.text()) + 1))
                 self.ImgAddPatches()
-            if str(self.rClicktype.currentText()) == 'Add 1st box corner':
+            if str(self.rClicktype.currentText()) == 'Add Top Right box corner':
                 self.guidePoints['TR'] = [int(event.ydata),int(event.xdata)]
-                self.rClicktype.setCurrentIndex =='Add 2nd box corner'
+                self.rClicktype.setCurrentIndex =='Add Top Left box corner'
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
@@ -199,9 +199,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
 
-            if str(self.rClicktype.currentText()) == 'Add 2nd box corner':
+            if str(self.rClicktype.currentText()) == 'Add Top Left box corner':
                 self.guidePoints['TL'] = [int(event.ydata),int(event.xdata)]
-                self.rClicktype.setCurrentIndex =='Add 3rd box corner'
+                self.rClicktype.setCurrentIndex =='Add Bottom Left box corner'
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
@@ -213,9 +213,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
 
-            if str(self.rClicktype.currentText()) == 'Add 3rd box corner':
+            if str(self.rClicktype.currentText()) == 'Add Bottom Left box corner':
                 self.guidePoints['BL'] = [int(event.ydata),int(event.xdata)]
-                self.rClicktype.setCurrentIndex =='Add 4th box corner'
+                self.rClicktype.setCurrentIndex =='Add Bottom Right corner'
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
@@ -227,7 +227,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
 
-            if str(self.rClicktype.currentText()) == 'Add 4th box corner':
+            if str(self.rClicktype.currentText()) == 'Add Bottom Right box corner':
                 self.guidePoints['BR'] = [int(event.ydata),int(event.xdata)]
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
@@ -372,10 +372,10 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                     polygonListCount += array(whichpolygon)
                     #print('pollistcount:'+str(polygonListCount))
                     #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
-                    if r - int(self.cellMarkerSize.text()) > 0:
-                        c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=2.5, ec = 'red', alpha = 0.15)
+                    if r + int(self.cellMarkerSize.text()) > 0:
+                        c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=2.5, alpha = 0.95)
                         ax.add_patch(c)
-                    ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
+                    if self.cellIndexradio.isChecked(): ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
             self.nMarkedCells.setText(str(ctr) )
             self.table.setItem(int(self.numLayers.text()) +1 , 2, QtWidgets.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
             self.table.setItem( int(self.numLayers.text()), 2, QtWidgets.QTableWidgetItem(str(int(self.bigpoligon.area/self.bigpoligon.area))))
@@ -414,11 +414,11 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                 y, x, r = blob
                 #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
                 if r + int(self.cellMarkerSize.text()) > 0:
-                    c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color='gray',ec= 'white' ,linewidth=1,  alpha = 0.3)
+                    c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color='gray',ec= 'white' ,linewidth=1,  alpha = 0.5)
                     ax.add_patch(c)
                 #c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color='gray', linewidth=.5, alpha = 0.3)
 
-                ax.text(x,y, str(number), color = 'white', fontsize = 6)
+                if self.cellIndexradio.isChecked(): ax.text(x,y, str(number), color = 'white', fontsize = 6)
         for number, key in enumerate(self.guidePoints):
             if self.guidePoints[key] != 0:
                 ax.add_patch(Circle(self.guidePoints[key][::-1], int(self.numLayers.text()), color='w', linewidth=2, fill=True))

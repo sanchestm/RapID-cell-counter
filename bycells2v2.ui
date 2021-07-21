@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>587</height>
+    <width>994</width>
+    <height>726</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>SRGAP2A_E14.5-E18.5_3-2.png</normaloff>SRGAP2A_E14.5-E18.5_3-2.png</iconset>
+    <normaloff>../../../.designer/backup/SRGAP2A_E14.5-E18.5_3-2.png</normaloff>../../../.designer/backup/SRGAP2A_E14.5-E18.5_3-2.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -179,14 +179,20 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="FindCells">
-          <property name="text">
-           <string>Auto find cells</string>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="topMargin">
+           <number>0</number>
           </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QRadioButton" name="cellIndexradio">
+            <property name="text">
+             <string>index marked cells</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QLabel" name="label_9">
             <property name="text">
@@ -204,22 +210,17 @@
             </property>
            </widget>
           </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>35</width>
-              <height>30</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="FindCells">
+          <property name="text">
+           <string>Auto find cells</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
            <widget class="QLabel" name="label_5">
             <property name="font">
@@ -234,6 +235,22 @@
              <string>nº marked fluorescent cells </string>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>35</width>
+              <height>30</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <widget class="QLabel" name="nMarkedCells">
@@ -270,22 +287,22 @@
             </item>
             <item>
              <property name="text">
-              <string>Add 1st box corner</string>
+              <string>Add Top Right box corner</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Add 2nd box corner</string>
+              <string>Add Top Left box corner</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Add 3rd box corner</string>
+              <string>Add Bottom Left box corner</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Add 4th box corner</string>
+              <string>Add Bottom Right box corner</string>
              </property>
             </item>
            </widget>
@@ -366,7 +383,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>442</width>
+     <width>994</width>
      <height>21</height>
     </rect>
    </property>
