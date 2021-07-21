@@ -42,7 +42,7 @@ from skimage.filters import median
 
 
 #form_class = uic.loadUiType("C:\Users\thiag\Documents\GitHub\RapID-cell-counter\bycells2.ui")[0]
-form_class = uic.loadUiType("bycells2.ui")[0]
+form_class = uic.loadUiType("bycells2v2.ui")[0]
 #form_class2 = uic.loadUiType("bycells_classwindow.ui")[0]
 
 class MainWindow(QtWidgets.QMainWindow, form_class):
@@ -372,8 +372,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                     polygonListCount += array(whichpolygon)
                     #print('pollistcount:'+str(polygonListCount))
                     #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
-                    c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
-                    ax.add_patch(c)
+                    if r - int(self.cellMarkerSize.text()) > 0:
+                        c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=2.5, ec = 'red', alpha = 0.15)
+                        ax.add_patch(c)
                     ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
             self.nMarkedCells.setText(str(ctr) )
             self.table.setItem(int(self.numLayers.text()) +1 , 2, QtWidgets.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
@@ -412,12 +413,16 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             for number, blob in enumerate(self.THEblobs):
                 y, x, r = blob
                 #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
-                c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color='gray', linewidth=.5, alpha = 0.3)
-                ax.add_patch(c)
+                if r + int(self.cellMarkerSize.text()) > 0:
+                    c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color='gray',ec= 'white' ,linewidth=1,  alpha = 0.3)
+                    ax.add_patch(c)
+                #c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color='gray', linewidth=.5, alpha = 0.3)
+
                 ax.text(x,y, str(number), color = 'white', fontsize = 6)
         for number, key in enumerate(self.guidePoints):
             if self.guidePoints[key] != 0:
                 ax.add_patch(Circle(self.guidePoints[key][::-1], int(self.numLayers.text()), color='w', linewidth=2, fill=True))
+                ax.text(self.guidePoints[key][1]-7,self.guidePoints[key][0]+5, key, color = 'firebrick', fontsize = 10) #add here number of guide point
 
         if self.guidePoints['TR'] != 0 and self.guidePoints['TL'] != 0: ax.plot([self.guidePoints['TR'][1],self.guidePoints['TL'][1]]
                                                                                 , [self.guidePoints['TR'][0],self.guidePoints['TL'][0]], '-', color='w', linewidth=2)
