@@ -374,7 +374,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                     #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                     if r + int(self.cellMarkerSize.text()) > 0:
                         c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=2.5, alpha = 0.95)
-                        ax.add_patch(c)
+                    else:
+                        c = Circle((x,y), 1, linewidth=2.5, alpha = 0.95, color=colors[whichpolygon.index(1)])
+                    ax.add_patch(c)
                     if self.cellIndexradio.isChecked(): ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
             self.nMarkedCells.setText(str(ctr) )
             self.table.setItem(int(self.numLayers.text()) +1 , 2, QtWidgets.QTableWidgetItem(str(self.imgPolygon.area/self.bigpoligon.area)[:4]))
@@ -415,7 +417,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                 #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
                 if r + int(self.cellMarkerSize.text()) > 0:
                     c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color='gray',ec= 'white' ,linewidth=1,  alpha = 0.5)
-                    ax.add_patch(c)
+                else:
+                    c = Circle((x,y),1,linewidth=1,  alpha = 0.5)
+                ax.add_patch(c)
                 #c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color='gray', linewidth=.5, alpha = 0.3)
 
                 if self.cellIndexradio.isChecked(): ax.text(x,y, str(number), color = 'white', fontsize = 6)
