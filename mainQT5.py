@@ -177,7 +177,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             if str(self.rClicktype.currentText()) == 'Add cell':
                 squaresize = self.cropsize
                 #print(len(self.THEblobs))
-                self.THEblobs =np.array(self.THEblobs.tolist() + [[int(event.ydata), int(event.xdata), self.cropsize]])
+                self.THEblobs =np.array(self.THEblobs.tolist() + [[int(event.ydata), int(event.xdata), -99]])
                 #print(len(self.THEblobs))
                 #self.table.setHorizontalHeaderLabels(['index', 'auto class', 'manual class'])
                 #rowPosition = self.table.rowCount()
@@ -374,8 +374,10 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                     #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color=colors[whichpolygon.index(1)], linewidth=.5, alpha = 0.3)
                     if r + int(self.cellMarkerSize.text()) > 0:
                         c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color=colors[whichpolygon.index(1)], linewidth=2.5, alpha = 0.95)
+                    elif r == -99:
+                        c = Circle((x,y), 6, linewidth=2.5, ec = 'red', alpha = 0.95, color=colors[whichpolygon.index(1)])
                     else:
-                        c = Circle((x,y), 1, linewidth=2.5, alpha = 0.95, color=colors[whichpolygon.index(1)])
+                        c = Circle((x,y), 1, linewidth=1, alpha = 0.95, color=colors[whichpolygon.index(1)])
                     ax.add_patch(c)
                     if self.cellIndexradio.isChecked(): ax.text(x,y, polygonListCount[whichpolygon.index(1)], color = 'white', fontsize = 10)
             self.nMarkedCells.setText(str(ctr) )
@@ -417,8 +419,10 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                 #c = Rectangle((x + int(squaresize/2), y + int(squaresize/2)),squaresize,squaresize, color='gray', linewidth=.5, alpha = 0.3)
                 if r + int(self.cellMarkerSize.text()) > 0:
                     c = Circle((x,y), r+ int(self.cellMarkerSize.text()) if r+ int(self.cellMarkerSize.text())<squaresize else squaresize, color='gray',ec= 'white' ,linewidth=1,  alpha = 0.5)
+                elif r == -99:
+                    c = Circle((x,y),5,  alpha = 0.5, ec= 'red', linewidth=2)
                 else:
-                    c = Circle((x,y),1,linewidth=1,  alpha = 0.5)
+                    c = Circle((x,y),1,  alpha = 0.5)
                 ax.add_patch(c)
                 #c = Circle((x,y), r+10 if r+10<squaresize else squaresize, color='gray', linewidth=.5, alpha = 0.3)
 
