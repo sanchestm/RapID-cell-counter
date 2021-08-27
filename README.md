@@ -33,9 +33,7 @@ cd Downloads\RapID-cell-counter-master
 ```
 <details>
   <summary>Code version for Linux and Mac </summary>
-  ```
-  cd Downloads/RapID-cell-counter-master
-  ```
+  <code>cd Downloads/RapID-cell-counter-master </code>
 </details>
 
 
@@ -58,11 +56,11 @@ python mainQT5.py
 ```
 <details>
   <summary>Code version for Linux and Mac </summary>
-  ```
-  conda activate RapID
-  cd Downloads/RapID-cell-counter-master
-  python mainQT5.py
-  ```
+<code>
+conda activate RapID
+cd Downloads/RapID-cell-counter-master
+python mainQT5.py
+</code>
 </details>
 
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/rerun.png)
