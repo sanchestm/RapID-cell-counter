@@ -57,8 +57,8 @@ python mainQT5.py
 <details>
   <summary>Code version for Linux and Mac </summary>
     <p><code>
-    conda activate RapID
-    cd Downloads/RapID-cell-counter-master
+    conda activate RapID <br>
+    cd Downloads/RapID-cell-counter-master <br>
     python mainQT5.py
     </code></p>
 </details>
