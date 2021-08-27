@@ -31,6 +31,14 @@ conda activate RapID
 ```
 cd Downloads\RapID-cell-counter-master
 ```
+<details>
+  <summary>Code version for Linux and Mac </summary>
+  ```
+  cd Downloads/RapID-cell-counter-master
+  ```
+</details>
+
+
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/opening_folder.png)
 
 4. Start the software by typing the following code into the terminal and pressing enter
@@ -48,6 +56,14 @@ conda activate RapID
 cd Downloads\RapID-cell-counter-master
 python mainQT5.py
 ```
+<details>
+  <summary>Code version for Linux and Mac </summary>
+  ```
+  conda activate RapID
+  cd Downloads/RapID-cell-counter-master
+  python mainQT5.py
+  ```
+</details>
 
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/rerun.png)
 
