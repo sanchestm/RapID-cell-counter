@@ -31,10 +31,11 @@ conda activate RapID
 ```
 cd Downloads\RapID-cell-counter-master
 ```
+
 <details>
   <summary>Code version for Linux and Mac </summary>
 
-  cd Downloads/RapID-cell-counter-master
+    cd Downloads/RapID-cell-counter-master
 
 </details>
 
