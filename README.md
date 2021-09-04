@@ -9,21 +9,30 @@ PyQT graphical interface for high-throughput cell counting for research
     1. [Dowload Ananconda](https://www.anaconda.com/products/individual) if not done before
     2. Dowload and unzip the RapID-cell-counter manually: click the green button writen `code` (at the top center of this page) and then click `download zip` in the dropdown options (or use git clone if experienced)
 2. **Open terminal**
-    1. **In Windows** open Ananconda Navigator desktop app then click on CMD.exe Prompt
+    1.
+    <details>
+      <summary>  **In Windows** open Ananconda Navigator desktop app then click on CMD.exe Prompt </summary>
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/navigator.png)
+</details>
+
     2. **In Linux** the terminal can be open directly via CRTL+ALT+T
     3. **In Mac:** open terminal by searching `terminal` in Spotlight (or Finder). Open the terminal by clicking the terminal app
 3. In the terminal copy-paste and press enter for the following code
     1. `conda create --name RapID -y shapely pandas pyqt scikit-image`
+    <details>
+      <summary> screenshot </summary>
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env2.png)
-
+</details>
 
 ### Run program
 
-#### For Windows
 <details>
   <summary>
- <b> <big> For Windows  </big></b>
+ <b>
+  <big>
+   For Windows  
+   </big>
+   </b>
   </summary>
 
 1. **Open terminal**
@@ -71,7 +80,11 @@ python mainQT5.py
 
 <details>
   <summary>
- <b> <big> For Linux and Mac  </big></b>
+ <b>
+  <big>
+   For Linux and Mac
+    </big>
+    </b>
   </summary>
 
 
