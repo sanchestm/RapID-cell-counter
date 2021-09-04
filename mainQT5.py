@@ -66,9 +66,9 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
         self.REDimage = 0
         self.GREENimage = 0
         self.THEblobs = np.array([])
-        self.table.setColumnCount(6)
+        self.table.setColumnCount(5)
         self.layout.addWidget(self.table, 1, 0)
-        self.table.setHorizontalHeaderLabels(['Layer', 'Fluorescent cell count', 'Area', 'Density', 'Nuclei count', 'Fluorescent fraction' ])
+        self.table.setHorizontalHeaderLabels(['Layer', 'Fluorescent cell count', 'Area', 'Nuclei count', 'Fluorescent fraction' ])# , 'Density' at pos 3
         for num, layer in enumerate( [str(x+1) for x in range(int(self.numLayers.text()))] + ['Total selected reg', 'Total image']):
             self.table.insertRow(num)
             self.table.setItem(num , 0, QtWidgets.QTableWidgetItem(layer))
@@ -76,7 +76,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             self.table.setItem(num , 2, QtWidgets.QTableWidgetItem("0"))
             self.table.setItem(num , 3, QtWidgets.QTableWidgetItem("0"))
             self.table.setItem(num , 4, QtWidgets.QTableWidgetItem("0"))
-            self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
+            #self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
 
         self.directory = 'singleCells/'
         self.guidePoints = {'TR': 0, 'TL' : 0, 'BL' : 0, 'BR': 0}
@@ -124,7 +124,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                 self.table.setItem(num , 2, QtWidgets.QTableWidgetItem("0"))
                 self.table.setItem(num , 3, QtWidgets.QTableWidgetItem("0"))
                 self.table.setItem(num , 4, QtWidgets.QTableWidgetItem("0"))
-                self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
+                #self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
             self.directory = 'singleCells/'
             self.guidePoints = {'TR': 0, 'TL' : 0, 'BL' : 0, 'BR': 0}
             self.innergridRight = [(self.guidePoints['TR']*i+ self.guidePoints['BR']*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(1,int(self.numLayers.text()) +1)]
@@ -187,7 +187,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                 self.ImgAddPatches()
             if str(self.rClicktype.currentText()) == 'Add Top Right box corner':
                 self.guidePoints['TR'] = [int(event.ydata),int(event.xdata)]
-                self.rClicktype.setCurrentIndex =='Add Top Left box corner'
+                #self.rClicktype.setCurrentText('Add Top Left box corner')
 
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
@@ -195,40 +195,39 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                    self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
-                   for i in range(len(self.innergridLeft)-1):
+                   for i in list(range(len(self.innergridLeft)-1))[::-1]:
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
 
             if str(self.rClicktype.currentText()) == 'Add Top Left box corner':
                 self.guidePoints['TL'] = [int(event.ydata),int(event.xdata)]
-                self.rClicktype.setCurrentIndex =='Add Bottom Left box corner'
-
+                #self.rClicktype.setCurrentText('Add Bottom Left box corner')
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
                    self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
-                   for i in range(len(self.innergridLeft)-1):
+                   for i in list(range(len(self.innergridLeft)-1))[::-1]:
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
 
             if str(self.rClicktype.currentText()) == 'Add Bottom Left box corner':
                 self.guidePoints['BL'] = [int(event.ydata),int(event.xdata)]
-                self.rClicktype.setCurrentIndex =='Add Bottom Right corner'
-
+                #self.rClicktype.setCurrentText('Add Bottom Right corner')
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
                    self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    self.innergridLeft = [(array(self.guidePoints['TL'])*i+ array(self.guidePoints['BL'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
-                   for i in range(len(self.innergridLeft)-1):
+                   for i in list(range(len(self.innergridLeft)-1))[::-1]:
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
 
             if str(self.rClicktype.currentText()) == 'Add Bottom Right box corner':
                 self.guidePoints['BR'] = [int(event.ydata),int(event.xdata)]
+                #self.rClicktype.setCurrentText('Add Top Right box corner')
                 if 0 not in self.guidePoints.values():
                    self.polygonList = []
                    self.innergridRight = [(array(self.guidePoints['TR'])*i+ array(self.guidePoints['BR'])*(int(self.numLayers.text())-i))/int(self.numLayers.text()) for i in range(0,int(self.numLayers.text()) +1)]
@@ -236,7 +235,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                    #print(self.innergridLeft, self.innergridRight)
                    self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
                    #print(self.bigpoligon)
-                   for i in range(len(self.innergridLeft)-1):
+                   for i in list(range(len(self.innergridLeft)-1))[::-1]:
                        self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
                 self.ImgAddPatches()
             if str(self.rClicktype.currentText()) == 'Remove cell':
@@ -268,7 +267,7 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
            #print(self.innergridLeft, self.innergridRight)
            self.bigpoligon = Polygon([self.guidePoints['TR'], self.guidePoints['TL'],self.guidePoints['BL'],self.guidePoints['BR']])
            #print(self.bigpoligon)
-           for i in range(len(self.innergridLeft)-1):
+           for i in list(range(len(self.innergridLeft)-1)):
                self.polygonList += [Polygon([self.innergridRight[i], self.innergridLeft[i],self.innergridLeft[i+1], self.innergridRight[i+1]])]
         self.ImgAddPatches()
 
@@ -299,40 +298,40 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             self.table.setItem(num , 2, QtWidgets.QTableWidgetItem("0"))
             self.table.setItem(num , 3, QtWidgets.QTableWidgetItem("0"))
             self.table.setItem(num , 4, QtWidgets.QTableWidgetItem("0"))
-            self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
+            #self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
 
         squaresize = self.cropsize
         image_gray = self.BLUEimage
 
         self.BLUEblobs = blob_log(self.BLUEimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
-        self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+        self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'RFP':
             blobs = blob_log(self.REDimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
-            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP':
             blobs = blob_log(self.GREENimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
-            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP or RFP':
             intermediary_fig = self.REDimage + self.GREENimage.astype(float)
             intermediary_fig = 255*(intermediary_fig - intermediary_fig.min())/ (intermediary_fig.max() - intermediary_fig.min())
             blobs = blob_log(intermediary_fig.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
-            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP and RFP':
             intermediary_fig = self.REDimage * self.GREENimage.astype(float)
             intermediary_fig = 255*(intermediary_fig - intermediary_fig.min())/ (intermediary_fig.max() - intermediary_fig.min())
             blobs = blob_log(intermediary_fig.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
-            self.table.setItem(int(self.numLayers.text()) + 1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+            self.table.setItem(int(self.numLayers.text()) + 1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'Orange':
             blobs = blob_log(self.ORANGEimage.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
-            self.table.setItem(int(self.numLayers.text()) + 1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+            self.table.setItem(int(self.numLayers.text()) + 1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         #blobsDAPI = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
         self.THEblobs = blobs
         print(blobs.shape)
         self.nMarkedCells.setText(str(len(blobs)))
         self.table.setItem(int(self.numLayers.text()) +1 , 1, QtWidgets.QTableWidgetItem(str(len(blobs))))
         #self.table.setItem(9 , 2, QtWidgets.QTableWidgetItem(str(len(blobsDAPI))))
-        if float(self.table.item(int(self.numLayers.text()) +1,2).text()) != 0:
-            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,2).text()))))
+        #if float(self.table.item(int(self.numLayers.text()) +1,2).text()) != 0:
+        #    self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,2).text()))))
         self.ImgAddPatches()
 
     def ImgAddPatches(self):
@@ -352,12 +351,12 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             self.table.setItem(num , 2, QtWidgets.QTableWidgetItem("0"))
             self.table.setItem(num , 3, QtWidgets.QTableWidgetItem("0"))
             self.table.setItem(num , 4, QtWidgets.QTableWidgetItem("0"))
-            self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
+            #self.table.setItem(num , 5, QtWidgets.QTableWidgetItem("0"))
 
         self.table.setItem(int(self.numLayers.text())+1 , 1, QtWidgets.QTableWidgetItem(str(len(self.THEblobs))))
-        self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
-        if float(self.table.item(int(self.numLayers.text()) +1,4).text()) > 0:
-            self.table.setItem(int(self.numLayers.text()) +1 , 5, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,4).text()))[:10]))
+        self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
+        if float(self.table.item(int(self.numLayers.text()) +1,3).text()) > 0:
+            self.table.setItem(int(self.numLayers.text()) +1 , 4, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,3).text()))[:10]))
 
         if 0 not in self.guidePoints.values():
             ctr = 0
@@ -385,12 +384,12 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
             self.table.setItem( int(self.numLayers.text()), 2, QtWidgets.QTableWidgetItem(str(int(self.bigpoligon.area/self.bigpoligon.area))))
             self.table.setItem(int(self.numLayers.text()) , 1, QtWidgets.QTableWidgetItem(str(ctr)))
 
-            self.table.setItem(int(self.numLayers.text()) , 3, QtWidgets.QTableWidgetItem(str(ctr)))
-            self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,2).text()))[:6]))
+            #self.table.setItem(int(self.numLayers.text()) , 3, QtWidgets.QTableWidgetItem(str(ctr)))
+            #self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()) +1,1).text())/float(self.table.item(int(self.numLayers.text()) +1,2).text()))[:6]))
 
             for n, pol in enumerate(self.polygonList):
                 self.table.setItem(n, 2, QtWidgets.QTableWidgetItem(str(pol.area/self.bigpoligon.area)[:4]))
-                self.table.setItem(n, 3, QtWidgets.QTableWidgetItem(str(polygonListCount[n]/(pol.area/self.bigpoligon.area))[:6]))
+                #self.table.setItem(n, 3, QtWidgets.QTableWidgetItem(str(polygonListCount[n]/(pol.area/self.bigpoligon.area))[:6]))
                 self.table.setItem(n, 1, QtWidgets.QTableWidgetItem(str(polygonListCount[n])))
 
             #### add blue cells to dapi count
@@ -404,12 +403,17 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
                     whichpolygonDAPI = [1  if x.contains(blobPoint) else 0  for x in self.polygonList]
                     polygonListCountDAPI += array(whichpolygonDAPI)
 
-            self.table.setItem(int(self.numLayers.text()) , 4, QtWidgets.QTableWidgetItem(str(ctrDAPI)))
-            if float(self.table.item(int(self.numLayers.text()),4).text())>0: self.table.setItem(int(self.numLayers.text()) , 5, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()),1).text())/ctrDAPI)))
+            self.table.setItem(int(self.numLayers.text()) , 3, QtWidgets.QTableWidgetItem(str(ctrDAPI)))
+            if float(self.table.item(int(self.numLayers.text()),3).text())>0: self.table.setItem(int(self.numLayers.text()) , 4, QtWidgets.QTableWidgetItem(str(float(self.table.item(int(self.numLayers.text()),1).text())/ctrDAPI)))
 
             for n, pol in enumerate(self.polygonList):
-                self.table.setItem(n, 5, QtWidgets.QTableWidgetItem(str(polygonListCount[n]/polygonListCountDAPI[n])[:6]))
-                self.table.setItem(n, 4, QtWidgets.QTableWidgetItem(str(polygonListCountDAPI[n])))
+                if polygonListCountDAPI[n] >0 :
+                    self.table.setItem(n, 4, QtWidgets.QTableWidgetItem(str(polygonListCount[n]/polygonListCountDAPI[n])[:6]))
+                else:
+                    self.table.setItem(n, 4, QtWidgets.QTableWidgetItem(str(0)))
+
+                self.table.setItem(n, 3, QtWidgets.QTableWidgetItem(str(polygonListCountDAPI[n])))
+
 
 
 
@@ -456,13 +460,13 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
         layer  = np.array([str(self.table.item(i,0).text())  for i in range(self.table.rowCount() ) ])
         fcells  = np.array([str(self.table.item(i,1).text())  for i in range(self.table.rowCount() ) ])
         area  = np.array([str(self.table.item(i,2).text())  for i in range(self.table.rowCount() ) ])
-        density  = np.array([str(self.table.item(i,3).text())  for i in range(self.table.rowCount() ) ])
-        nucleiCount = np.array([str(self.table.item(i,4).text())  for i in range(self.table.rowCount() ) ])
-        transfectedRatio = np.array([str(self.table.item(i,5).text())  for i in range(self.table.rowCount() ) ])
-        classtable = DataFrame( np.transpose(np.vstack((layer, fcells,area, density, nucleiCount, transfectedRatio))))#, index=dates, columns=[nome , classe])
+        #density  = np.array([str(self.table.item(i,3).text())  for i in range(self.table.rowCount() ) ])
+        nucleiCount = np.array([str(self.table.item(i,3).text())  for i in range(self.table.rowCount() ) ])
+        transfectedRatio = np.array([str(self.table.item(i,4).text())  for i in range(self.table.rowCount() ) ])
+        classtable = DataFrame( np.transpose(np.vstack((layer, fcells,area, nucleiCount, transfectedRatio))))#, index=dates, columns=[nome , classe])
         print(classtable)
         saveclassification = classtable.to_csv(self.figname +'_count.csv',index=False,header=['layers','Fluorescent cells'
-        , 'Area', 'Density', 'DAPI cell count', 'Transfection efficiency' ])
+        , 'Area', 'DAPI cell count', 'Fluorescent to DAPI ration' ])
 
 
 
