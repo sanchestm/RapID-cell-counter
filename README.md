@@ -21,6 +21,10 @@ PyQT graphical interface for high-throughput cell counting for research
 ### Run program
 
 #### For Windows
+<details>
+  <summary>
+ <b> <big> For Windows  </big></b>
+  </summary>
 
 1. **Open terminal**
 2. In the terminal, activate conda environment copy-paste and press enter for the following code
@@ -63,9 +67,11 @@ python mainQT5.py
 
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/rerun.png)
 
+</details>
+
 <details>
   <summary>
-#### For Linux and Mac
+ <b> <big> For Linux and Mac  </big></b>
   </summary>
 
 
