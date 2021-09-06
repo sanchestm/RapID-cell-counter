@@ -10,14 +10,14 @@ PyQT graphical interface for high-throughput cell counting for research
     2. Dowload and unzip the RapID-cell-counter manually: click the green button writen `code` (at the top center of this page) and then click `download zip` in the dropdown options (or use git clone if experienced)
 2. **Open terminal**
     1. **In Windows** open Ananconda Navigator desktop app then click on CMD.exe Prompt
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/navigator.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/navigator.png)
     2. **In Linux** the terminal can be open directly via CRTL+ALT+T
     3. **In Mac:** open terminal by searching `terminal` in Spotlight (or Finder). Open the terminal by clicking the terminal app
 3. In the terminal copy-paste and press enter for the following code
 ```
 conda create --name RapID -y shapely pandas pyqt scikit-image
 ```
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/create_env2.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/create_env2.png)
 
 
 ### Run program
@@ -36,7 +36,7 @@ conda create --name RapID -y shapely pandas pyqt scikit-image
 ```
 conda activate RapID
 ```
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/activating_conda_environment.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/activating_conda_environment.png)
 
 3. Once we activated the conda environment (which contains all the necessary packages to run the code) we can locate the file (the directory where we downloaded and unzipped the package) and enter the directory to be able to run the program. As an example if we unzipped our file in the Downloads directory we can open this directory using the `cd` Command. In Linux and Mac, the dashes are `/` while in windows we use `\`
 ```
@@ -44,14 +44,14 @@ cd Downloads\RapID-cell-counter-master
 ```
 
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/opening_folder.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/opening_folder.png)
 
 4. Start the software by typing the following code into the terminal and pressing enter
 ```
 python mainQT5.py
 ```
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/running_program.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/running_program.png)
 
 ### Rerunning the program
 
@@ -63,7 +63,7 @@ python mainQT5.py
 ```
 
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/rerun.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/rerun.png)
 
 </details>
 
@@ -82,21 +82,21 @@ python mainQT5.py
 ```
 conda activate RapID
 ```
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/activating_conda_environment.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/activating_conda_environment.png)
 
 3. Once we activated the conda environment (which contains all the necessary packages to run the code) we can locate the file (the directory where we downloaded and unzipped the package) and enter the directory to be able to run the program. As an example if we unzipped our file in the Downloads directory we can open this directory using the `cd` Command. In Linux and Mac, the dashes are `/` while in windows we use `\`
 ```
 cd Downloads/RapID-cell-counter-master
 ```
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/opening_folder.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/opening_folder.png)
 
 4. Start the software by typing the following code into the terminal and pressing enter
 ```
 python mainQT5.py
 ```
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/running_program.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/running_program.png)
 
 ### Rerunning the program
 
@@ -107,5 +107,5 @@ cd Downloads/RapID-cell-counter-master
 python mainQT5.py
 ```
 
-![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/images/rerun.png)
+![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/rerun.png)
 </details>
