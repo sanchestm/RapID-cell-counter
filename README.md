@@ -6,10 +6,10 @@ PyQT graphical interface for high-throughput cell counting for research
 ### Installing instruction
 
 1. **Download Anaconda and RapID source code**
-    1. [Dowload Ananconda](https://www.anaconda.com/products/individual) if not done before
-    2. Dowload and unzip the RapID-cell-counter manually: click the green button writen `code` (at the top center of this page) and then click `download zip` in the dropdown options (or use git clone if experienced)
+    1. [Download Ananconda](https://www.anaconda.com/products/individual) if not done before
+    2. Download and unzip the RapID-cell-counter manually: click the green button written `code` (at the top center of this page) and then click `download zip` in the dropdown options (or use git clone if experienced)
 2. **Open terminal**
-    1. **In Windows** open Ananconda Navigator desktop app then click on CMD.exe Prompt
+    1. **In Windows** open Anaconda Navigator desktop app then click on CMD.exe Prompt
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/navigator.png)
     2. **In Linux** the terminal can be open directly via CRTL+ALT+T
     3. **In Mac:** open terminal by searching `terminal` in Spotlight (or Finder). Open the terminal by clicking the terminal app
