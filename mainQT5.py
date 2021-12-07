@@ -303,26 +303,26 @@ class MainWindow(QtWidgets.QMainWindow, form_class):
         squaresize = self.cropsize
         image_gray = self.BLUEimage
 
-        self.BLUEblobs = blob_log(self.BLUEimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+        self.BLUEblobs = blob_log(self.BLUEimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text().replace(',', '.')) ,threshold=float(self.thresholdSpin.text().replace(',', '.')), exclude_border = squaresize)
         self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'RFP':
-            blobs = blob_log(self.REDimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            blobs = blob_log(self.REDimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text().replace(',', '.')) ,threshold=float(self.thresholdSpin.text().replace(',', '.')), exclude_border = squaresize)
             self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP':
-            blobs = blob_log(self.GREENimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            blobs = blob_log(self.GREENimage,  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text().replace(',', '.')) ,threshold=float(self.thresholdSpin.text().replace(',', '.')), exclude_border = squaresize)
             self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP or RFP':
             intermediary_fig = self.REDimage + self.GREENimage.astype(float)
             intermediary_fig = 255*(intermediary_fig - intermediary_fig.min())/ (intermediary_fig.max() - intermediary_fig.min())
-            blobs = blob_log(intermediary_fig.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            blobs = blob_log(intermediary_fig.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text().replace(',', '.')) ,threshold=float(self.thresholdSpin.text().replace(',', '.')), exclude_border = squaresize)
             self.table.setItem(int(self.numLayers.text()) +1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'GFP and RFP':
             intermediary_fig = self.REDimage * self.GREENimage.astype(float)
             intermediary_fig = 255*(intermediary_fig - intermediary_fig.min())/ (intermediary_fig.max() - intermediary_fig.min())
-            blobs = blob_log(intermediary_fig.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            blobs = blob_log(intermediary_fig.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text().replace(',', '.')) ,threshold=float(self.thresholdSpin.text().replace(',', '.')), exclude_border = squaresize)
             self.table.setItem(int(self.numLayers.text()) + 1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         if str(self.fMarker.currentText())  == 'Orange':
-            blobs = blob_log(self.ORANGEimage.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text()) ,threshold=float(self.thresholdSpin.text()), exclude_border = squaresize)
+            blobs = blob_log(self.ORANGEimage.astype('uint8'),  max_sigma=int(self.maxSigSpin.text()), num_sigma=10, min_sigma = int(self.minSigSpin.text()),overlap = float(self.log_overlap.text().replace(',', '.')) ,threshold=float(self.thresholdSpin.text().replace(',','.')), exclude_border = squaresize)
             self.table.setItem(int(self.numLayers.text()) + 1 , 3, QtWidgets.QTableWidgetItem(str(len(self.BLUEblobs))))
         #blobsDAPI = blob_log(self.BLUEimage[squaresize:-squaresize,squaresize:-squaresize],  max_sigma=10, num_sigma=10, min_sigma = 3, threshold=.1)
         self.THEblobs = blobs
