@@ -15,7 +15,7 @@ PyQT graphical interface for high-throughput cell counting for research
     3. **In Mac:** open terminal by searching `terminal` in Spotlight (or Finder). Open the terminal by clicking the terminal app
 3. In the terminal copy-paste and press enter for the following code
 ```
-conda create --name RapID -y shapely pandas pyqt scikit-image
+conda create --name RapID -y shapely pandas pyqt scikit-image matplotlib
 ```
 ![screenshot](https://github.com/sanchestm/RapID-cell-counter/blob/master/screenshots/create_env2.png)
 
